@@ -24,5 +24,13 @@ namespace api.Controllers
             
             return Ok(new{Success=true, Data=customer});
         }
+
+        [HttpPost]
+        public async Task<IActionResult>AddCustomer(Customer model)
+        {
+            context.Customers.Add(model);
+            await context.SaveChangesAsync();
+            return StatusCode(201);
+        }
     }
 }
