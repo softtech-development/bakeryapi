@@ -1,4 +1,5 @@
 using api.Data;
+using api.Dtos;
 using api.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,9 +27,17 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>AddCustomer(Customer model)
+        public async Task<IActionResult>AddCustomer(CustomerPostDto model)
         {
-            context.Customers.Add(model);
+            Customer customer = new()
+            {
+                Name = model.Name,
+                StoreNumber = model.StoreNumber,
+                AddressLine = model.AddressLine,
+                PostalCode = model.PostalCode,
+            };
+
+            context.Customers.Add(customer);
             await context.SaveChangesAsync();
             return StatusCode(201);
         }
